@@ -78,16 +78,38 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "bookshelf.CustomUser"
 
+# ==============================
 # ✅ Security Configurations
+# ==============================
+
+# Browser-level protections
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = "DENY"
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
+# Enforce cookies only over HTTPS
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
+
+# Force HTTPS redirect
+SECURE_SSL_REDIRECT = True
+
+# HSTS (Strict Transport Security)
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
 
 # ✅ CSP rules
 CSP_DEFAULT_SRC = ("'self'",)
 CSP_STYLE_SRC = ("'self'", "https://fonts.googleapis.com")
 CSP_SCRIPT_SRC = ("'self'",)
 CSP_IMG_SRC = ("'self'", "data:")
+
+# ==============================
+# Notes:
+# - SECURE_SSL_REDIRECT: redirects all HTTP → HTTPS
+# - HSTS: forces browsers to only use HTTPS (prevents downgrade attacks)
+# - Secure cookies: prevents leakage over HTTP
+# - X_FRAME_OPTIONS, NOSNIFF, XSS_FILTER: harden browser security
+# - CSP: prevents loading scripts/styles from unauthorized domains
+# ==============================
